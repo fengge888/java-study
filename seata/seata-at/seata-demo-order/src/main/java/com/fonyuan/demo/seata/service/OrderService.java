@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -21,6 +22,7 @@ public class OrderService {
     private StorageFeignClient storageApi;
 
     @GlobalTransactional(timeoutMills = 600000)
+    @Transactional
     public String createOrder(String userId, String orderId, String psSkuCode, int qty) throws InterruptedException {
 
         String xid = RootContext.getXID();
@@ -33,9 +35,9 @@ public class OrderService {
         orderInfoEntity.setOrderId(orderId);
         orderInfoEntity.setPsSkuCode(psSkuCode);
         orderInfoEntity.setQty(qty);
-
+        // 创建订单
         orderRepository.save(orderInfoEntity);
-
+        // 扣减库存
         storageApi.useStorage(orderId, psSkuCode, qty);
 
         // 模拟异常信息

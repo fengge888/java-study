@@ -133,6 +133,7 @@
             <version>2.2.4</version>
         </dependency>
 
+        <!-- Seata 引用包 Begin-->
         <dependency>
             <groupId>io.seata</groupId>
             <artifactId>seata-all</artifactId>
@@ -150,6 +151,7 @@
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
             <version>2022.0.0.0</version>
         </dependency>
+        <!-- Seata 引用包 End-->
 
         <!-- FastJson 主要提供Json操作 -->
         <dependency>
